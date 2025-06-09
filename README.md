@@ -47,6 +47,6 @@ This project highlights an ability to diagnose problems, architect solutions, an
 
 ### Future Improvements
 
-* **Layout-Aware OCR:** Integrate `layout-parser` to improve parsing accuracy by analyzing the document's visual structure.
+* **Advanced OCR & Layout Analysis:** Integrate more advanced tools like `OCRmyPDF` to create a fully searchable PDF text layer, or use `layout-parser` to improve data extraction by analyzing the document's complex visual structure.
 * **Direct-to-Cloud:** Use the Google Sheets API to upload the DataFrame directly, creating a fully cloud-based workflow.
 * **Web Interface:** Wrap the pipeline in a simple Flask or Streamlit app to allow users to upload their own PDFs for processing.
