@@ -6,7 +6,7 @@ This project is an end-to-end Python pipeline that extracts structured business 
 
 ### Problem Statement
 
-The Newport, RI Chamber of Commerce declined to provide a digital copy of their member contact list. The publicly available version was a digital flyer where all text was embedded within images, preventing standard copy-pasting and data extraction. The goal was to overcome this technical barrier and produce a usable contact list.
+The Newport, RI Chamber of Commerce (politely!) declined to provide a digital copy of their member contact list. The publicly available version was a digital flyer where all text was embedded within images, preventing standard copy-pasting and data extraction. The goal was to overcome this technical barrier and produce a usable contact list.
 
 ### How It Works: The Pipeline
 
