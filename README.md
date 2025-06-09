@@ -1,36 +1,52 @@
 # Newport Chamber of Commerce OCR Contact Extractor
 
-## Summary
-This project showcases an AI-assisted pipeline for extracting structured business contact information from a publicly visible—but intentionally copy-protected—chamber of commerce directory PDF. The original source was an image-based, non-interactive digital flyer, which required advanced processing to convert into usable, structured data.
+### Summary
 
-## Problem Statement
-The Newport, RI Chamber of Commerce declined to provide their member contact list, despite the list being publicly viewable online. The information was embedded in images to prevent direct copying, complicating any attempt at data extraction.
+This project is an end-to-end Python pipeline that extracts structured business contact information from a copy-protected, image-based PDF directory. Faced with an intentionally non-cooperative data source, this solution automates the conversion of rasterized text into a clean, structured, and actionable dataset, demonstrating a pragmatic approach to real-world data acquisition challenges.
 
-## My Approach
-Rather than accept this as a dead end, I viewed it as a technical challenge. My engineering brain went to work. With no selectable text and over a dozen pages of image-encoded content, I built a resilient data extraction pipeline using OCR and regular expression parsing.
+### Problem Statement
 
-- **Image Conversion**: Used `pdf2image` to convert specific PDF pages (30–40) to raster images.
-- **Optical Character Recognition (OCR)**: Extracted text from images using `pytesseract`, providing a viable path for machine-readable content.
-- **Regex-based Parsing**: Developed pattern-matching logic to isolate names, emails, and phone numbers.
-- **Data Structuring**: Employed pandas to clean and format the extracted information into a usable Excel file.
-- **Post-Processing**: Created a standalone utility to extract and de-duplicate valid emails into a separate file.
+The Newport, RI Chamber of Commerce declined to provide a digital copy of their member contact list. The publicly available version was a digital flyer where all text was embedded within images, preventing standard copy-pasting and data extraction. The goal was to overcome this technical barrier and produce a usable contact list.
 
-## Key Achievements
-- Extracted over **1,200 business contacts** from a non-cooperative data source.
-- Produced clean, spreadsheet-ready contact lists usable in marketing, analytics, or CRM tools.
-- Demonstrated **pragmatic AI integration** with traditional scripting—mixing large language model guidance with classical programming methods.
+### How It Works: The Pipeline
 
-## Tools & Technologies
-- `Python`, `pandas`, `pytesseract`, `pdf2image`
-- Regex for robust pattern extraction
-- Markdown documentation and structured comments for technical transparency
+I engineered a multi-stage process to systematically convert the locked PDF pages into structured data.
 
-## Why It Matters
-This project highlights my ability to reverse-engineer real-world constraints, integrate AI tools fluidly, and push through institutional barriers with practical technical solutions. It’s less about the code, and more about the mindset.
+1.  [cite_start]**PDF to Image Conversion:** The script first isolates the target pages (30-40, accounting for a cover offset) from the source `npt_chamber.pdf` and converts each page into a high-resolution image using the `pdf2image` library, which leverages the Poppler PDF rendering engine. 
 
-> 🧠 *AI is a superpower—but only in the hands of those who know how to ask the right questions.*
+2.  **Optical Character Recognition (OCR):** Each generated image is then processed by Google's Tesseract OCR engine via the `pytesseract` Python wrapper. [cite_start]This step "reads" the text from the images, turning visual data into a raw, machine-readable string. 
 
-## Future Improvements
-- Use `layoutparser` or `OCRmyPDF` for layout-aware extraction.
-- Integrate Google Sheets API for direct cloud syncing.
-- Wrap the pipeline into a Flask or Streamlit app for reusability.
+3.  **Parsing and Structuring:** The raw OCR text is parsed using custom logic. The script splits the text into blocks assumed to be individual business entries. [cite_start]Regular expressions (`regex`) are then used to pinpoint and extract specific data points like phone numbers and email addresses from the text blocks. 
+
+4.  [cite_start]**Data Export:** The extracted and cleaned data (Name, Phone, Email) is structured into a `pandas` DataFrame and exported to `output.xlsx`, a universally compatible spreadsheet file. 
+
+5.  **Post-Processing & Collation:** A second utility script, `cleaner.py`, reads the generated Excel file. [cite_start]It scans both the "Name" and "Email" columns for any valid email addresses that may have been misplaced during OCR, deduplicates the final list, and outputs a clean, comma-separated string to `chamber_email_list.txt` for immediate use in mail clients or marketing platforms. 
+
+### Tech Stack
+
+* **Core Language:** Python
+* **Data Extraction & Processing:**
+    * `pdf2image`: Converts PDF pages to images.
+    * `Pytesseract`: Python wrapper for Google's Tesseract OCR Engine.
+    * `Pandas`: For data structuring and export to Excel.
+    * `re` (Regex): For robust pattern-matching and data cleaning.
+* **External Dependencies:**
+    * **Poppler:** A PDF rendering library required by `pdf2image`.
+    * **Tesseract:** The core OCR engine.
+
+### Key Achievements
+
+* Successfully extracted and structured over 1,200 business contacts from a locked, image-based PDF.
+* Engineered a resilient, multi-stage data pipeline from the ground up to solve a real-world data access problem.
+* [cite_start]Demonstrated robust troubleshooting of complex environment issues, including PATH configuration for external binaries like Poppler and Tesseract. 
+
+### Why It Matters
+
+This project highlights an ability to diagnose problems, architect solutions, and push through technical barriers with practical tools. It’s less about a single piece of code and more about the problem-solving mindset: when the front door is locked, you build a key.
+🧠 AI is a superpower—but only in the hands of those who know how to ask the right questions.
+
+### Future Improvements
+
+* **Layout-Aware OCR:** Integrate `layout-parser` to improve parsing accuracy by analyzing the document's visual structure.
+* **Direct-to-Cloud:** Use the Google Sheets API to upload the DataFrame directly, creating a fully cloud-based workflow.
+* **Web Interface:** Wrap the pipeline in a simple Flask or Streamlit app to allow users to upload their own PDFs for processing.
