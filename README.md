@@ -12,15 +12,15 @@ The Newport, RI Chamber of Commerce declined to provide a digital copy of their 
 
 I engineered a multi-stage process to systematically convert the locked PDF pages into structured data.
 
-1.  [cite_start]**PDF to Image Conversion:** The script first isolates the target pages (30-40, accounting for a cover offset) from the source `npt_chamber.pdf` and converts each page into a high-resolution image using the `pdf2image` library, which leverages the Poppler PDF rendering engine. 
+1.  **PDF to Image Conversion:** The script first isolates the target pages (30-40, accounting for a cover offset) from the source `npt_chamber.pdf` and converts each page into a high-resolution image using the `pdf2image` library, which leverages the Poppler PDF rendering engine. 
 
-2.  **Optical Character Recognition (OCR):** Each generated image is then processed by Google's Tesseract OCR engine via the `pytesseract` Python wrapper. [cite_start]This step "reads" the text from the images, turning visual data into a raw, machine-readable string. 
+2.  **Optical Character Recognition (OCR):** Each generated image is then processed by Google's Tesseract OCR engine via the `pytesseract` Python wrapper. This step "reads" the text from the images, turning visual data into a raw, machine-readable string. 
 
-3.  **Parsing and Structuring:** The raw OCR text is parsed using custom logic. The script splits the text into blocks assumed to be individual business entries. [cite_start]Regular expressions (`regex`) are then used to pinpoint and extract specific data points like phone numbers and email addresses from the text blocks. 
+3.  **Parsing and Structuring:** The raw OCR text is parsed using custom logic. The script splits the text into blocks assumed to be individual business entries. Regular expressions (`regex`) are then used to pinpoint and extract specific data points like phone numbers and email addresses from the text blocks. 
 
-4.  [cite_start]**Data Export:** The extracted and cleaned data (Name, Phone, Email) is structured into a `pandas` DataFrame and exported to `output.xlsx`, a universally compatible spreadsheet file. 
+4.  **Data Export:** The extracted and cleaned data (Name, Phone, Email) is structured into a `pandas` DataFrame and exported to `output.xlsx`, a universally compatible spreadsheet file. 
 
-5.  **Post-Processing & Collation:** A second utility script, `cleaner.py`, reads the generated Excel file. [cite_start]It scans both the "Name" and "Email" columns for any valid email addresses that may have been misplaced during OCR, deduplicates the final list, and outputs a clean, comma-separated string to `chamber_email_list.txt` for immediate use in mail clients or marketing platforms. 
+5.  **Post-Processing & Collation:** A second utility script, `cleaner.py`, reads the generated Excel file. It scans both the "Name" and "Email" columns for any valid email addresses that may have been misplaced during OCR, deduplicates the final list, and outputs a clean, comma-separated string to `chamber_email_list.txt` for immediate use in mail clients or marketing platforms. 
 
 ### Tech Stack
 
@@ -38,7 +38,7 @@ I engineered a multi-stage process to systematically convert the locked PDF page
 
 * Successfully extracted and structured over 1,200 business contacts from a locked, image-based PDF.
 * Engineered a resilient, multi-stage data pipeline from the ground up to solve a real-world data access problem.
-* [cite_start]Demonstrated robust troubleshooting of complex environment issues, including PATH configuration for external binaries like Poppler and Tesseract. 
+* Demonstrated robust troubleshooting of complex environment issues, including PATH configuration for external binaries like Poppler and Tesseract. 
 
 ### Why It Matters
 
